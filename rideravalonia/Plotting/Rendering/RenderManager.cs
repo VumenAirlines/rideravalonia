@@ -2,45 +2,43 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Diagnostics;
+using System.Linq;
 using Avalonia;
 using rideravalonia.Plotting.Components;
 using rideravalonia.Plotting.Rendering.RenderActions;
 using SkiaSharp;
 
 namespace rideravalonia.Plotting.Rendering;
-/// <summary>
-/// Manages the rendering pipeline for a plot
-/// </summary>
-/// <param name="plot">The <see cref="Plot"/> to be rendered</param>
-public class RenderManager(Plot plot) 
+
+
+public class RenderManager(Plot plot)
 {
-    public HashSet<IRenderAction> Actions { get; } = [ new RenderBackground(),new RenderPlottables()];
+    private HashSet<IRenderAction> Actions { get; } = [new RenderBackground(), new RenderPlottables()];
     public bool EnableRendering { get; set; } = true;
     private Plot Plot { get; } = plot;
-    /// <summary>
-    /// Start the render pipeline 
-    /// </summary>
-    /// <param name="rect">The <see cref="Rect"/> representing the screen dimensions</param>
-    /// <param name="canvas"><see cref="SKCanvas"/> to drawn on</param>
 
-    public void Render(SKCanvas canvas,Rect rect)
+    
+    private readonly List<double> fps = [];
+
+    public void Render(SKCanvas canvas, Rect rect)
     {
-        RenderOnce(canvas,rect);
+        RenderOnce(canvas, rect);
     }
-    /// <summary>
-    /// Runs all the registered <see cref="IRenderAction"/>s
-    /// </summary>
-    /// <param name="rect">The <see cref="Rect"/> representing the screen dimensions</param>
-    /// <param name="canvas"><see cref="SKCanvas"/> to drawn on</param>
 
-    private void RenderOnce(SKCanvas canvas,Rect rect)
+   
+    private void RenderOnce(SKCanvas canvas, Rect rect)
     {
-        if(!EnableRendering) return;
+        
+        if (!EnableRendering) return;
         RenderPack rp = new RenderPack(canvas, Plot, rect);
+        Stopwatch sw = new Stopwatch();
         foreach (IRenderAction action in Actions)
         {
+            sw.Restart();
             action.Render(rp);
+            fps.Add(sw.Elapsed.TotalSeconds);
+            Console.WriteLine(1 / (fps.Sum() / fps.Count));
         }
     }
- 
 }

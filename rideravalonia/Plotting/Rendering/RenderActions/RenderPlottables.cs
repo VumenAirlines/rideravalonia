@@ -3,10 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
+using Avalonia.Skia;
+using rideravalonia.Plotting.Interfaces;
 
 namespace rideravalonia.Plotting.Rendering.RenderActions;
+
 /// <summary>
-/// Responsible for rendering the background of the <see cref="Interfaces.IPlottable"/>
+///     Responsible for rendering the background of the <see cref="Interfaces.IPlottable" />
 /// </summary>
 public class RenderPlottables : IRenderAction
 {
@@ -14,14 +17,18 @@ public class RenderPlottables : IRenderAction
     {
         if (rp.Plot.Plottables.Count == 0)
             return;
+        
+
 
         rp.Canvas.Save();
+        rp.Canvas.ClipRect(rp.Bounds.ToSKRect());
         //rp.Canvas.SetMatrix(rp.Plot.CoordinateManager.TransformedSpace); 
 
-        foreach (var plottable in rp.Plot.Plottables)
+        foreach (IPlottable plottable in rp.Plot.Plottables)
+        {
             plottable.Render(rp);
+        }
 
         rp.Canvas.Restore();
     }
 }
-

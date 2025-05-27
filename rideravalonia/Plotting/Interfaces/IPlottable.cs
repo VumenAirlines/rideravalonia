@@ -6,7 +6,7 @@ using rideravalonia.Plotting.Rendering;
 
 namespace rideravalonia.Plotting.Interfaces;
 
-public interface IPlottable
+public interface IPlottable : IDisposable
 {
     /// <summary>
     /// Controls whether the plot is rendered or not

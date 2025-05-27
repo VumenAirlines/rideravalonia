@@ -3,11 +3,11 @@
              x:Class="rideravalonia.Views.FirstView"
              xmlns:vm="clr-namespace:rideravalonia.ViewModels"
              x:DataType="vm:FirstViewModel" 
-             xmlns:plotting="clr-namespace:rideravalonia.Plotting.Components">
-
+             xmlns:plotting="clr-namespace:rideravalonia.Plotting.Components"
+             >
     <plotting:PlotContainer 
-        Width="500" 
-        Height="500" 
-        Fill="LightGreen" 
+        Name="PlotContainer"
+        Fill="LightGreen"
+       
        />
 </UserControl>
