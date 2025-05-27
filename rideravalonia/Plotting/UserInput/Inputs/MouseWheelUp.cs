@@ -9,8 +9,16 @@ namespace rideravalonia.Plotting.UserInput.Inputs;
 /// Represents scroll wheel up event
 /// </summary>
 /// <param name="Point">Position of the cursor as a <see cref="SKPoint"/></param>
-public record struct MouseWheelUp(SKPoint Point): IMouseButtonInput
+public record struct MouseWheelUp(SKPoint Point, int ClickCount): IMouseButtonInput
 {
-    public bool Pressed => false;
-    public MouseButton Button => MouseButton.Wheel;
+    
+    public bool Pressed
+    {
+        get => false;
+    }
+
+    public MouseButton Button
+    {
+        get => MouseButton.Wheel;
+    }
 }

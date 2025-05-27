@@ -9,8 +9,15 @@ namespace rideravalonia.Plotting.UserInput.Inputs;
 /// Represents a mouse left click up event
 /// </summary>
 /// <param name="Point">Position of the cursor as a <see cref="SKPoint"/></param>
-public record struct LeftMouseUp(SKPoint Point): IMouseButtonInput
+public record struct LeftMouseUp(SKPoint Point, int ClickCount): IMouseButtonInput
 {
-    public bool Pressed => false;
-    public MouseButton Button => MouseButton.Left;
+    public bool Pressed
+    {
+        get => false;
+    }
+
+    public MouseButton Button
+    {
+        get => MouseButton.Left;
+    }
 }

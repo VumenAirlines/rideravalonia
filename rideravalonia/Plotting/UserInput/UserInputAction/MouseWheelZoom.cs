@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Avalonia.Input;
 using rideravalonia.Plotting.Components;
 using rideravalonia.Plotting.UserInput.Inputs;
 
@@ -12,9 +13,17 @@ namespace rideravalonia.Plotting.UserInput.UserInputAction;
 public class MouseWheelZoom:IUserInputAction
 {
     public double ZoomValue { get; set; } = 0.15d;
-    private double ZoomInValue => 1 + ZoomValue;
-    private double ZoomOutValue => 1 - ZoomValue;
-    public (bool isLocked, bool isRefresh) Execute(IUserInput input, PlotContainer container)
+    private double ZoomInValue
+    {
+        get => 1 + ZoomValue;
+    }
+
+    private double ZoomOutValue
+    {
+        get => 1 - ZoomValue;
+    }
+
+    public (bool isLocked, bool isRefresh) Execute(IUserInput input, PlotContainer container,HashSet<Key> pressedKeys)
     {
 
         double zoomFactor = input switch

@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using SkiaSharp;
-
+using Avalonia.Input;
 using rideravalonia.Plotting.Components;
+using SkiaSharp;
 
 namespace rideravalonia.Plotting.UserInput.UserInputAction;
 /// <summary>
@@ -13,7 +13,7 @@ namespace rideravalonia.Plotting.UserInput.UserInputAction;
 public class MousePanAction:IUserInputAction
 {
     private SKPoint? _start;
-    public (bool isLocked, bool isRefresh) Execute(IUserInput input, PlotContainer container)
+    public (bool isLocked, bool isRefresh) Execute(IUserInput input, PlotContainer container,HashSet<Key> pressedKeys)
     {
         switch (input)
         {

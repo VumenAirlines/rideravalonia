@@ -2,19 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using SkiaSharp;
+using Avalonia.Input;
 
 namespace rideravalonia.Plotting.UserInput.Inputs;
 
-public record struct LeftMouseDown(SKPoint Point, int ClickCount): IMouseButtonInput
+//todo: make not avalonia
+public record struct KeyDown(Key key) : IUserInput
 {
-    public bool Pressed
-    {
-        get => true;
-    }
-
-    public MouseButton Button
-    {
-        get => MouseButton.Left;
-    }
+    public readonly Key Key { get; } = key;
 }
+

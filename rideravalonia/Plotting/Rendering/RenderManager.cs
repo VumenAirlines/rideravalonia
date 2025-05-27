@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
-using System.Linq;
 using Avalonia;
 using rideravalonia.Plotting.Components;
 using rideravalonia.Plotting.Rendering.RenderActions;
@@ -38,7 +37,7 @@ public class RenderManager(Plot plot)
             sw.Restart();
             action.Render(rp);
             fps.Add(sw.Elapsed.TotalSeconds);
-            Console.WriteLine(1 / (fps.Sum() / fps.Count));
+           // Console.WriteLine(1 / (fps.Sum() / fps.Count));
         }
     }
 }

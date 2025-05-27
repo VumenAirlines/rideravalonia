@@ -22,6 +22,7 @@ public class PlotContainer : Control
     {
         ClipToBounds = true;
         InputHandler = new InputHandler(this);
+        Focusable = true;
     }
 
     private InputHandler InputHandler { get; }
@@ -57,7 +58,6 @@ public class PlotContainer : Control
     
     public void Invalidate()
     {
-        //Dispatcher.UIThread.Invoke(InvalidateVisual, DispatcherPriority.Background);
         
             if (Dispatcher.UIThread.CheckAccess())
             {
@@ -99,8 +99,8 @@ public class PlotContainer : Control
         var pos = e.GetPosition(this);
         IUserInput input = e.GetCurrentPoint(this).Properties.PointerUpdateKind switch
         {
-            PointerUpdateKind.LeftButtonPressed => new LeftMouseDown(pos.ToSKPoint()),
-            _ => new LeftMouseDown(pos.ToSKPoint())
+            PointerUpdateKind.LeftButtonPressed => new LeftMouseDown(pos.ToSKPoint(),e.ClickCount),
+            _ => new LeftMouseDown(pos.ToSKPoint(),0) //todo rightclick
         };
         InputHandler.Process(input);
         e.Pointer.Capture(this);
@@ -111,8 +111,8 @@ public class PlotContainer : Control
         var pos = e.GetPosition(this);
         IUserInput input = e.GetCurrentPoint(this).Properties.PointerUpdateKind switch
         {
-            PointerUpdateKind.LeftButtonReleased => new LeftMouseUp(pos.ToSKPoint()),
-            _ => new LeftMouseUp(pos.ToSKPoint())
+            PointerUpdateKind.LeftButtonReleased => new LeftMouseUp(pos.ToSKPoint(),0),
+            _ => new LeftMouseUp(pos.ToSKPoint(),0)
         };
         InputHandler.Process(input);
         e.Pointer.Capture(null);
@@ -123,11 +123,21 @@ public class PlotContainer : Control
         var pos = e.GetPosition(this);
         IUserInput input = e.Delta.Y switch
         {
-            < 0 => new MouseWheelDown(pos.ToSKPoint()),
-            _ => new MouseWheelUp(pos.ToSKPoint())
+            < 0 => new MouseWheelDown(pos.ToSKPoint(),0),
+            _ => new MouseWheelUp(pos.ToSKPoint(),0)
         };
         InputHandler.Process(input);
         e.Handled = true;
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        InputHandler.Process(new KeyDown(e.Key));
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {       
+        InputHandler.Process(new KeyUp(e.Key));
     }
 
     #endregion

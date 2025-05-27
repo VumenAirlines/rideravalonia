@@ -62,6 +62,14 @@ public class CoordinateManager
         _bottomRight = GetTransformSpacePoint(new SKPoint((float)_bounds.Width, (float)_bounds.Height));
     }
 
+    public void Reset(Rect bounds)
+    {
+       
+        Origin  = new SKPoint(0, 0);
+        _scale = new SKPoint(1, -1);
+        CoordinateScale  = 10f;
+        UpdateTransform(bounds);
+    }
     public void MousePan(SKPoint delta)
     {
         Origin = new SKPoint(Origin.X + delta.X, Origin.Y + delta.Y);

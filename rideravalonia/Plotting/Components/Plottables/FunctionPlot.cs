@@ -7,6 +7,7 @@ using rideravalonia.Plotting.Interfaces;
 using rideravalonia.Plotting.Models;
 using rideravalonia.Plotting.Rendering;
 using rideravalonia.Plotting.UserInput;
+using rideravalonia.Plotting.UserInput.UserInputAction;
 using SkiaSharp;
 
 namespace rideravalonia.Plotting.Components.Plottables;
@@ -78,10 +79,10 @@ public class FunctionPlot:IPlottable
             }
             
             if (y < cm.Bottom || y > cm.Top)
-                y =  Math.Clamp(y, cm.Bottom-1, cm.Top+1);
-            
-            
-            float expectedY = 0; //Math.Sin(x); 
+                y = Math.Clamp(y, cm.Bottom - 1, cm.Top + 1);
+
+
+            float expectedY = 0;//(float)Math.Sin(x); 
             
             if (i < bitmapColors.Length) 
                 bitmapColors[i++] = InterpolateSignedHSV( expectedY - y, MaxDistance);
@@ -104,6 +105,11 @@ public class FunctionPlot:IPlottable
             .WithLocalMatrix(_shaderMatrix);
         _paint.Shader = _shader;
         
+        if (MouseOverGraphAction.MousePosition is not null)
+        {
+            SKPoint mousePos = cm.GetTransformSpacePoint(MouseOverGraphAction.MousePosition.Value);
+            Console.WriteLine(FSrc.Get(mousePos.X));
+        }
         rp.Canvas.DrawPath(_path, _paint);
 
     }

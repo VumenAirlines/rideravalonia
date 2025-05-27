@@ -17,18 +17,12 @@ public interface IUserInput
 /// </summary>
 public interface IMouseButtonInput:IMouseInput
 {
-    /// <summary>
-    /// Indicates whether the button is pressed 
-    /// </summary>
+    
     public bool Pressed { get; }
-    /// <summary>
-    /// Indicates which button was involved in the event as a <see cref="MouseButton"/>
-    /// </summary>
+    public int ClickCount { get; }
     public MouseButton Button { get; }
 }
-/// <summary>
-/// Represents an input with the mouse
-/// </summary>
+
 public interface IMouseInput:IUserInput
 {
     public SKPoint Point { get; }
