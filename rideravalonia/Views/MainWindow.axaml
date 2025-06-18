@@ -1,14 +1,54 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window
+       
+        xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:rideravalonia.ViewModels"
         xmlns:rxui="http://reactiveui.net"
         xmlns:app="clr-namespace:rideravalonia"
+        
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="rideravalonia.MainWindow"
+        x:Class="rideravalonia.Views.MainWindow"
         Title="rideravalonia"
-        x:DataType="vm:MainWindowViewModel">
+        x:DataType="vm:MainWindowViewModel"
+        ExtendClientAreaChromeHints="OSXThickTitleBar"
+        ExtendClientAreaTitleBarHeightHint="32"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        >
+    
+    <Grid>
+        <!-- Custom title bar -->
+        <Border Height="30" 
+                VerticalAlignment="Top" 
+               
+                ZIndex="100">
+            <Grid>
+                <Border Background="Transparent" 
+                      />
+                
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Left">
+                    <Button Name="MinimizeButton" 
+                            Content="-" 
+                            Width="45" 
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+
+                           />
+                    <Button Name="CloseButton" 
+                            Content="🗙" 
+                            Width="45" 
+                            Height="30"
+                            Background="Transparent"
+                            Foreground="Black"
+                            />
+                </StackPanel>
+            </Grid>
+        </Border>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -25,15 +65,16 @@
                 <app:ViewLocator />
             </rxui:RoutedViewHost.ViewLocator>
         </rxui:RoutedViewHost>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15">
-            <StackPanel.Styles>
-                <Style Selector="StackPanel > :is(Control)">
-                    <Setter Property="Margin" Value="2"/>
-                </Style>
-                <Style Selector="StackPanel > TextBlock">
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-            </StackPanel.Styles>
-        </StackPanel>
+        <!-- <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="15"> -->
+        <!--     <StackPanel.Styles> -->
+        <!--         <Style Selector="StackPanel > :is(Control)"> -->
+        <!--             <Setter Property="Margin" Value="2"/> -->
+        <!--         </Style> -->
+        <!--         <Style Selector="StackPanel > TextBlock"> -->
+        <!--             <Setter Property="VerticalAlignment" Value="Center"/> -->
+        <!--         </Style> -->
+        <!--     </StackPanel.Styles> -->
+        <!-- </StackPanel> -->
     </Grid>
+        </Grid>
 </Window>

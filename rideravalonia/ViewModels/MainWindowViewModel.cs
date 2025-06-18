@@ -1,17 +1,22 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-using Avalonia.ReactiveUI;
+﻿using System.Reactive.Disposables;
 using ReactiveUI;
+using Splat;
+
 namespace rideravalonia.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase, IScreen
+public class MainWindowViewModel : ViewModelBase, IScreen, IActivatableViewModel
 {
-    public RoutingState Router { get; } = new RoutingState();
+    public RoutingState Router { get; } = new();
+    public ViewModelActivator Activator { get; } = new();
 
     public MainWindowViewModel()
     {
-        Router.Navigate.Execute(new FirstViewModel(this));
-        
+        this.WhenActivated(() =>
+        {
+            var firstViewModel = Locator.Current.GetService<FirstViewModel>();
+            if (firstViewModel is not null)
+                Router.Navigate.Execute(firstViewModel);
+            return [Disposable.Empty];
+        });
     }
 }

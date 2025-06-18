@@ -4,10 +4,72 @@
              xmlns:vm="clr-namespace:rideravalonia.ViewModels"
              x:DataType="vm:FirstViewModel" 
              xmlns:plotting="clr-namespace:rideravalonia.Plotting.Components"
-             >
-    <plotting:PlotContainer 
-        Name="PlotContainer"
-        Fill="LightGreen"
-       
-       />
+             xmlns:local="clr-namespace:rideravalonia.Views"
+             xmlns:controls="clr-namespace:rideravalonia.Controls"
+             xmlns:converters="clr-namespace:rideravalonia.Converters"
+            >
+    <UserControl.Resources>
+        <converters:SelectedFunctionConverter x:Key="SelectedFunctionConverter" />
+     
+            
+    </UserControl.Resources>
+    
+    <UserControl.Styles>
+        <Style Selector="Expander:expanded ToggleButton:checked">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+    
+    <Grid RowDefinitions="*, Auto" ColumnDefinitions="*,300">
+                <plotting:PlotContainer
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    x:Name="GraphContainer"
+                    Name="GraphContainer"
+                />
+                
+                <ScrollViewer Grid.Row="0" Grid.Column="1" Focusable="True"
+                              VerticalScrollBarVisibility="Auto" Padding="10,10,10,0" >
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding Inputs }">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" Spacing="10" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                       
+                            <ItemsControl.ItemTemplate>
+                                <!--Todo: make datatrigger -->
+                                <DataTemplate>
+                                    <Border BorderThickness="2" CornerRadius="20" >
+                                        <Border.BorderBrush>
+                                            <MultiBinding Converter="{StaticResource SelectedFunctionConverter}">
+                                                <Binding Path="Id"/>
+                                                <Binding Path="ViewModel.Current.Id" RelativeSource="{RelativeSource AncestorType=local:FirstView}"/>
+                                            </MultiBinding>
+                                        </Border.BorderBrush>
+                                       
+                                        <controls:InputHistory  Input="{Binding .}" OnClick="{Binding ViewModel.SelectCurrent, RelativeSource={RelativeSource AncestorType=local:FirstView}}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Margin="0,0,0,20"/>
+                    </StackPanel>
+                    
+                </ScrollViewer>
+                <Expander Grid.Row="1" Grid.Column="1" Padding="10" Header="Inputs" HorizontalAlignment="Stretch" >
+                    <StackPanel Orientation="Vertical" Spacing="10" >
+                        <TextBox Margin="10,0,10,10" Watermark="Add Expression" Text="{Binding FunctionString}"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+
+                            <Button Margin="10,0,10,10" Grid.Column="0" Command="{Binding AddItemCommand}">Send</Button>
+                            <Button Margin="10,0,10,10" Grid.Column="2">Hint</Button>
+
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+              
+            </Grid>
+    
 </UserControl>

@@ -13,7 +13,7 @@ using SkiaSharp;
 namespace rideravalonia.Plotting.Components;
 public class Plot : IDisposable
 {
-    public List<IPlottable> Plottables { get; } = [new Axis(),new FunctionPlot()];
+    public List<IPlottable> Plottables { get; set; } = [new Axis(),new FunctionPlot()];
     private RenderManager RenderManager { get; }
     public readonly BackgroundStyle BackgroundStyle = new();
     public readonly CoordinateManager CoordinateManager;

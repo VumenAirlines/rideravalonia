@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rideravalonia", "rideravalonia\rideravalonia.csproj", "{089209A3-9F26-459D-BDD4-40AC6BBFCD40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exp-Parser", "D:\Dev\Exp-Parser\Exp-Parser\Exp-Parser.csproj", "{58C3957D-1257-440B-9A2A-F541B1B26666}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{089209A3-9F26-459D-BDD4-40AC6BBFCD40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{089209A3-9F26-459D-BDD4-40AC6BBFCD40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{089209A3-9F26-459D-BDD4-40AC6BBFCD40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C3957D-1257-440B-9A2A-F541B1B26666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C3957D-1257-440B-9A2A-F541B1B26666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C3957D-1257-440B-9A2A-F541B1B26666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C3957D-1257-440B-9A2A-F541B1B26666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

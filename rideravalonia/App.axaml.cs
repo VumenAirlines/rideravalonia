@@ -3,14 +3,13 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using rideravalonia.ViewModels;
-using rideravalonia.Views;
 using Splat;
 
 namespace rideravalonia;
 
-public partial class App : Application
+public class App : Application
 {
-    private IClassicDesktopStyleApplicationLifetime? _desktop;
+    //private IClassicDesktopStyleApplicationLifetime? _desktop;
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -18,30 +17,35 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            _desktop= desktop;
-            
-            var mainWindow = new MainWindow()
-            {
-                DataContext = Locator.Current.GetService<MainWindowViewModel>()
-            };
-            _desktop.MainWindow = mainWindow;
-            _desktop.MainWindow.Activate();
-            _desktop.MainWindow.Show();
-        }
-
-        base.OnFrameworkInitializationCompleted();
 #if DEBUG
-        // Required by Avalonia XAML editor to recognize custom XAML namespaces. Until they fix the problem.
-        //GC.KeepAlive(typeof(SvgImage));
-       //GC.KeepAlive(typeof(EventTriggerBehavior));
-
         if (Design.IsDesignMode)
         {
             base.OnFrameworkInitializationCompleted();
             return;
         }
 #endif
+
+        try
+        {
+           
+           
+           
+
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var mainViewModel = Locator.Current.GetService<MainWindowViewModel>();
+                if (mainViewModel == null)
+                    throw new InvalidOperationException("MainWindowViewModel not registered in DI container");
+                
+                desktop.MainWindow = new Views.MainWindow { DataContext = mainViewModel };
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Startup error: {ex.Message}");
+            throw;
+        }
+
+        base.OnFrameworkInitializationCompleted();
     }
 }

@@ -1,9 +1,12 @@
-﻿using Avalonia;
+﻿using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
 using Avalonia.Skia;
 using Avalonia.Threading;
+using rideravalonia.Plotting.Components.Plottables;
+using rideravalonia.Plotting.Models;
 using rideravalonia.Plotting.Rendering;
 using rideravalonia.Plotting.UserInput;
 using rideravalonia.Plotting.UserInput.Inputs;
@@ -11,9 +14,7 @@ using Size = Avalonia.Size;
 
 namespace rideravalonia.Plotting.Components;
 
-/// <summary>
-///     The main container for the plot
-/// </summary>
+
 public class PlotContainer : Control
 {
     public Plot? _plot;
@@ -40,6 +41,18 @@ public class PlotContainer : Control
 
     #endregion
 
+    public void UpdateFunction(Func<double,double> newFunc)
+    {
+        if(_plot?.Plottables.First(x => x is FunctionPlot) is not FunctionPlot fplot) return;
+        fplot.FSrc = new FunctionSource(newFunc);
+        Invalidate();
+    }
+    public void ClearPlot()
+    {
+        if(_plot?.Plottables.First(x => x is FunctionPlot) is not FunctionPlot fplot) return;
+        fplot.FSrc = new FunctionSource( x=>0);
+    }
+    
     #region Render
 
     
@@ -51,8 +64,13 @@ public class PlotContainer : Control
         }
 
         Rect controlBounds = new(Bounds.Size);
-        CustomDrawOp customDrawOp = new(controlBounds, _plot);
-        context.Custom(customDrawOp);
+        using (context.PushClip(controlBounds))
+        {
+            CustomDrawOp customDrawOp = new(controlBounds, _plot);
+            context.Custom(customDrawOp);
+        }
+        
+        //todo: changing bounds changes coloring
     }
 
     

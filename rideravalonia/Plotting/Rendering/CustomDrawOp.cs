@@ -19,8 +19,16 @@ namespace rideravalonia.Plotting.Rendering;
 public class CustomDrawOp(Rect bounds, Plot plot) : ICustomDrawOperation
 {
     public Rect Bounds { get; } = bounds;
-    public bool HitTest(Point p) => true;
-    public bool Equals(ICustomDrawOperation? other) => false;
+    
+    public bool HitTest(Point p)
+    {
+        return Bounds.Contains(p); // Only return true if point is within bounds
+    }
+
+    public bool Equals(ICustomDrawOperation? other)
+    {
+        return false;
+    }
 
     public void Dispose()
     {
@@ -33,15 +41,18 @@ public class CustomDrawOp(Rect bounds, Plot plot) : ICustomDrawOperation
         if (leaseFeature is null) return;
 
         using ISkiaSharpApiLease lease = leaseFeature.Lease();
-                
-        using (var _ = new SKAutoCanvasRestore(lease.SkCanvas, false))
+    
+        SKRect bounds = Bounds.ToSKRect();
+        
+        lease.SkCanvas.SaveLayer(bounds, null);
+        try
         {
-            lease.SkCanvas.Save();
-                 
-            plot.Render(lease.SkCanvas, new Rect((Bounds.Size)));
-                   
+            lease.SkCanvas.ClipRect(bounds);
+            plot.Render(lease.SkCanvas, new Rect(Bounds.Size));
+        }
+        finally
+        {
             lease.SkCanvas.Restore();
         }
-        lease.SkCanvas.SaveLayer();
     }
 }

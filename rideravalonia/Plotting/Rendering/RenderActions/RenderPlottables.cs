@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using Avalonia.Skia;
 using rideravalonia.Plotting.Interfaces;
 
 namespace rideravalonia.Plotting.Rendering.RenderActions;
@@ -21,7 +20,7 @@ public class RenderPlottables : IRenderAction
 
 
         rp.Canvas.Save();
-        rp.Canvas.ClipRect(rp.Bounds.ToSKRect());
+      
         //rp.Canvas.SetMatrix(rp.Plot.CoordinateManager.TransformedSpace); 
 
         foreach (IPlottable plottable in rp.Plot.Plottables)

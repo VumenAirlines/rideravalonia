@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="rideravalonia.Controls.InputHistory"
+             x:Name="Self">
+    
+    <Border Padding="10"
+            Background="Gray"
+            PointerPressed="OnPointerPressed"
+            CornerRadius="20"
+           >
+        
+        <Grid RowDefinitions="Auto,*,Auto" >
+            <TextBlock Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       Width="150"
+                       Text="{Binding Path=Input.Input,Mode=OneWay,ElementName=Self}" />
+
+           <Grid Grid.Row="1" />
+
+          <DockPanel Grid.Row="2">
+              <TextBlock DockPanel.Dock="Left"
+                         HorizontalAlignment="Right"
+                         Width="150"
+                         Text="{Binding Path=Input.InputTime,ElementName=Self, Mode=OneWay}" />
+          </DockPanel>
+            
+        </Grid>
+    </Border>
+</UserControl>

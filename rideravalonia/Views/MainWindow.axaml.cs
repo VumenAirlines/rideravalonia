@@ -1,16 +1,32 @@
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
 using ReactiveUI;
 using rideravalonia.ViewModels;
 
-namespace rideravalonia;
+using Splat;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+namespace rideravalonia.Views;
+
+public partial class MainWindow :  Window,IViewFor<MainWindowViewModel>
 {
     public MainWindow()
     {
-        this.WhenActivated(disposables => { });
-        AvaloniaXamlLoader.Load(this);
+        ViewModel = Locator.Current.GetService<MainWindowViewModel>();
+        DataContext = ViewModel;
+
+        InitializeComponent(); 
+        
+        this.WhenActivated(disposables => 
+        {
+            // Your reactive bindings here
+        });
     }
+
+
+    object? IViewFor.ViewModel
+    {
+        get => ViewModel;
+        set => ViewModel = (MainWindowViewModel?)value;
+    }
+
+    public MainWindowViewModel? ViewModel { get; set; }
 }

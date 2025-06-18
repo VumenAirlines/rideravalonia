@@ -18,5 +18,6 @@ public interface IPlottable : IDisposable
     /// <param name="rp"><see cref="RenderPack"/> of the <see cref="IPlottable"/></param>
     void Render(RenderPack rp);
 
+    
  
 }
