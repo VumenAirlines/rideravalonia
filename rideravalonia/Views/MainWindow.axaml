@@ -12,13 +12,14 @@
         x:Class="rideravalonia.Views.MainWindow"
         Title="rideravalonia"
         x:DataType="vm:MainWindowViewModel"
-        ExtendClientAreaChromeHints="OSXThickTitleBar"
-        ExtendClientAreaTitleBarHeightHint="32"
-        ExtendClientAreaToDecorationsHint="True"
+       
+        
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        >
-    
+        ><!--ExtendClientAreaChromeHints="OSXThickTitleBar"
+        ExtendClientAreaTitleBarHeightHint="32"
+        ExtendClientAreaToDecorationsHint="True" -->
+
     <Grid>
         <!-- Custom title bar -->
         <Border Height="30" 
